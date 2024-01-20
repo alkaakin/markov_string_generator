@@ -1,4 +1,4 @@
-##Määrittelydokumentti
+##Description document (määrittelydokumentti)
 
 The project will be coded with Java. I have also been coding with Python. / Projekti ohjelmoidaan Javalla, mutta ymmärrän myös Pythonia vertaisarviointeja varten.
 
