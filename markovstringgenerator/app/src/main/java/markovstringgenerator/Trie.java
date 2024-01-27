@@ -1,5 +1,7 @@
 package markovstringgenerator;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,18 +23,37 @@ public class Trie {
         this.root = new TrieNode();
     }
     
+    public void moveIntoNode() {
+        
+    }
+    
     //This insertion to be replaced later with a file scan from the .txt file
     public void insertChild(String name) {
+        
         TrieNode current = this.root;
+        
         char[] splitname = name.toCharArray();
-        /*Let's create a loop that goes through the characters from the beginning of the word; 
-        *If the first character is not a child of the node, add the character as the child of the;
-        *current node; if it is a child of the current node, break out of the loop and move the pointer (current node);
-        *to the next character;
-        */
-        for (char x : splitname) {
-            if (!current.getChildren().containsKey(x)) {
-                current.addChild(x, new TrieNode());
+        List<Character> charList = new ArrayList<>();
+        for (char c : splitname) {
+            charList.add(c);
+        }
+        assertEquals(name.length(), charList.size());
+        for (int i = 0; i < charList.size(); i ++) {
+            //Needing a method for checking if the char being handled is the final char of the string. Then we would need to break the loop and set the flag as true for the hashmap.
+            //Check this if statement below, not sure about the charlist index variable.
+            if (i == charList.get(i)) {
+                current.setAsFinalCharacter(true);
+            }
+            
+            if (!current.hasChild(charList.get(i))) {
+                //TrieNode child = New TrieNode(charList.get(i), new TrieNode());
+                current.addChild(charList.get(i), new TrieNode());
+                //How to move into this?
+                current = 
+                
+            }
+            if (current.getChildren().containsKey(x)) {
+                
             }
         }
     }
@@ -41,6 +62,10 @@ public class Trie {
     public static void main(String[] args) {
         
 
+    }
+
+    private void assertEquals(int length, int size) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
