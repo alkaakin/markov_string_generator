@@ -12,6 +12,7 @@ public class App {
     public static void main(String[] args) {
         Trie trie = new Trie();
         System.out.print(trie.searchTrie("ADD"));
-        System.out.print(trie.printTrie());
+        trie.insertTrie("ADD");
+        System.out.print(trie.searchTrie("ADD"));
     }
 }

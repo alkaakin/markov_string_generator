@@ -30,8 +30,16 @@ public class Trie {
         //The following method is identical to search method, except for the method needs to only check for each children at a time. Should the node in question not have the expected child, the iteration can stop and the rest of the word can be automatically filled in.
         for (int i = 0; i < word.length(); i ++) {
             char letter = word.charAt(i);
-    //The rest is work in progress
-    }
+            TrieNode nextLetter = current.children.get(letter);
+            //If the current node's child nodes do not contain the character in question, insert new node as a child.
+            if (!current.children.containsKey(letter)) {
+                nextLetter = new TrieNode();
+                current.children.put(letter, nextLetter);
+            }
+            current = nextLetter;
+    //The rest is work in progress; current.terminal needs to be changed once we're at the final letter
+        }
+        current.terminal = true;
     }
     
     
@@ -45,7 +53,8 @@ public class Trie {
             }
             current = nextLetter;
         }
-        return current.terminal;
+        return current.terminal; //checks if the last letter triggers the boolean "true", which would mean that the exact word is found in the trie.
+        //return true;
     }
     
     public ArrayList<String> printTrie() {

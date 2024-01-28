@@ -18,7 +18,7 @@ public class TrieNode {
     boolean terminal;
 
     public TrieNode() {
-        this.children = new HashMap<>();
+        this.children = new HashMap<Character, TrieNode>();
         this.terminal = false;
     }
 }
