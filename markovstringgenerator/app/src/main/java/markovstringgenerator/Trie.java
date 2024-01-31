@@ -2,6 +2,12 @@ package markovstringgenerator;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,10 +22,26 @@ public class Trie {
 
     private TrieNode root;
     private TrieNode current;
+    private FileInputStream stream;
+    private BufferedReader reader;
 
-    public Trie(){
+    public Trie() throws FileNotFoundException{
         this.root = new TrieNode();
+        //File nimilista = new File("nimilista.txt");
     }
+    
+    public void fileToTrie(File file) throws FileNotFoundException {
+        //return file;
+        //create method that reads contents of a file and inserts them into trie
+        Scanner s = new Scanner(file);
+        ArrayList words = new ArrayList<String>();
+        while (s.hasNextLine()) {
+            this.insertTrie(s.nextLine());
+        }
+        //return words;
+        //create method that reads contents of a file and inserts them into trie 
+    }
+    
     
     public void insertTrie(String word) {
         if (this.searchTrie(word)) {
