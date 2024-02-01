@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.stage.Stage;
 
 public class App {
     
@@ -15,6 +16,7 @@ public class App {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        
         Trie trie = new Trie();
         System.out.print(trie.searchTrie("ADD"));
         trie.insertTrie("ADD");
@@ -26,5 +28,25 @@ public class App {
         System.out.print(trie.searchTrie("Arwen"));
         System.out.print(trie.searchTrie("Alastair"));
         System.out.print(trie.searchTrie("Orpana"));
+        System.out.print(trie.searchTrie("Arwena"));
+        System.out.print(trie.searchTrie("Arwe"));
+        System.out.print(trie.searchTrie("Aleksi"));
+        System.out.print(trie.searchTrie("Aleks"));
+        System.out.print(trie.searchTrie("Aleksii"));
+        trie.insertTrie("Aleksii");
+        System.out.println(trie.searchTrie("Aleksii"));
+        System.out.println("\n");
+        System.out.println("testi");
+        System.out.println("\n");
+        System.out.println(trie.searchTrie("Inka"));
+        trie.insertTrie("Inka");
+        System.out.println("\n");
+        System.out.println(trie.searchTrie("Inka"));
+        System.out.println(trie.root.getCharacters());
+        System.out.println(trie.root.getChild("a"));
+        System.out.println(trie.root.getAllChildren("a"));
+        //testVisualization testi = new testVisualization();
+        //Stage stage = new Stage();
+        //testi.start(stage);
     }
 }

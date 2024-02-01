@@ -20,26 +20,25 @@ import java.io.FileNotFoundException;
  */
 public class Trie {
 
-    private TrieNode root;
-    private TrieNode current;
+    public TrieNode root;
+    public TrieNode current;
     private FileInputStream stream;
     private BufferedReader reader;
 
-    public Trie() throws FileNotFoundException{
+    public Trie() {
         this.root = new TrieNode();
-        //File nimilista = new File("nimilista.txt");
+    }
+    
+    public TrieNode returnRoot() {
+        return this.root;
     }
     
     public void fileToTrie(File file) throws FileNotFoundException {
-        //return file;
-        //create method that reads contents of a file and inserts them into trie
         Scanner s = new Scanner(file);
         ArrayList words = new ArrayList<String>();
         while (s.hasNextLine()) {
             this.insertTrie(s.nextLine());
         }
-        //return words;
-        //create method that reads contents of a file and inserts them into trie 
     }
     
     
@@ -47,19 +46,16 @@ public class Trie {
         if (this.searchTrie(word)) {
             return;
         }
-        //The idea is to always check that the current node is instantiated at the beginning of a method.
+        
         TrieNode current = this.root;
-        //The following method is identical to search method, except for the method needs to only check for each children at a time. Should the node in question not have the expected child, the iteration can stop and the rest of the word can be automatically filled in.
         for (int i = 0; i < word.length(); i ++) {
-            char letter = word.charAt(i);
+            char letter = Character.toLowerCase(word.charAt(i));
             TrieNode nextLetter = current.children.get(letter);
-            //If the current node's child nodes do not contain the character in question, insert new node as a child.
             if (!current.children.containsKey(letter)) {
                 nextLetter = new TrieNode();
                 current.children.put(letter, nextLetter);
             }
             current = nextLetter;
-    //The rest is work in progress; current.terminal needs to be changed once we're at the final letter
         }
         current.terminal = true;
     }
@@ -75,15 +71,12 @@ public class Trie {
             }
             current = nextLetter;
         }
-        return current.terminal; //checks if the last letter triggers the boolean "true", which would mean that the exact word is found in the trie.
-        //return true;
+        return current.terminal; 
+        
     }
     
-    public ArrayList<String> printTrie() {
-        //a method for testing if the Trie holds all expected words
-        //The method needs to be able to parse together different characters to form words..
-        ArrayList<String> trieContents = new ArrayList<>();
-        return trieContents;
+    void printWholeTrie() {
+
     }
     
     
