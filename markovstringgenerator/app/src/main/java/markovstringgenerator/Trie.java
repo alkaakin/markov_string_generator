@@ -37,8 +37,10 @@ public class Trie {
         Scanner s = new Scanner(file);
         ArrayList words = new ArrayList<String>();
         while (s.hasNextLine()) {
+            if (s.nextLine() != null || !(s.nextLine().isEmpty()) || !(s.nextLine().isBlank())) {
             this.insertTrie(s.nextLine());
         }
+    }
     }
     
     
@@ -47,6 +49,7 @@ public class Trie {
             return;
         }
         
+        //what needs to be added is a filter for checking if the letter is only a blank space
         TrieNode current = this.root;
         for (int i = 0; i < word.length(); i ++) {
             char letter = Character.toLowerCase(word.charAt(i));
@@ -63,6 +66,7 @@ public class Trie {
     
     public boolean searchTrie(String word) {
         TrieNode current = this.root;
+        word = word.toLowerCase();
         for (int i = 0; i < word.length(); i ++) {
             char letter = word.charAt(i);
             TrieNode nextLetter = current.children.get(letter);

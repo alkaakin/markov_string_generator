@@ -22,16 +22,27 @@ public class TrieNode {
         this.terminal = false;
     }
     
-    public TrieNode getChild(String x) {
-        char character = x.charAt(0);
-        return children.get(character);
+    public Collection getChild() {
+        return children.values();
+    }
+    
+    public boolean hasChildren() {
+        if (children.values().isEmpty()) {
+            return false;
+        }
+        return true;
     }
     
     //Trying to build a recursive method for printing all children of a certain node and then printing all children of the children etc.
-    public TrieNode getAllChildren(String x) {
-        char character = x.charAt(0);
-        while (children.keySet()!= null) {
-            System.out.print(children.keySet());
+    //Continue from here on Friday; its now printing only the first level children
+    public TrieNode getAllChildren() {
+        if (this.children.values() == null) {
+            return null;
+        }
+        while (this.hasChildren()) {
+            
+            
+            
         }
         return null;
     } 
