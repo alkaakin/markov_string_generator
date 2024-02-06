@@ -18,11 +18,12 @@ public class TrieNode {
     boolean terminal;
 
     public TrieNode() {
+        
         this.children = new HashMap<Character, TrieNode>();
         this.terminal = false;
     }
     
-    public Collection getChild() {
+    public Collection<TrieNode> getChild() {
         return children.values();
     }
     
@@ -33,19 +34,16 @@ public class TrieNode {
         return true;
     }
     
-    //Trying to build a recursive method for printing all children of a certain node and then printing all children of the children etc.
-    //Continue from here on Friday; its now printing only the first level children
-    public TrieNode getAllChildren() {
-        if (this.children.values() == null) {
-            return null;
+    public void getAllChildren() {
+        
+        for (TrieNode child : this.children.values()) {
+            System.out.println(child.toString());
+            if (child.hasChildren()) {
+                child.getAllChildren();
+            }
         }
-        while (this.hasChildren()) {
-            
-            
-            
-        }
-        return null;
-    } 
+          
+    }
     
     public void setChild(char character, TrieNode childNode) {
         children.put(character, childNode);

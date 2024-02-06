@@ -20,8 +20,8 @@ import java.io.FileNotFoundException;
  */
 public class Trie {
 
-    public TrieNode root;
-    public TrieNode current;
+    private TrieNode root;
+    private TrieNode current;
     private FileInputStream stream;
     private BufferedReader reader;
 
@@ -34,13 +34,15 @@ public class Trie {
     }
     
     public void fileToTrie(File file) throws FileNotFoundException {
-        Scanner s = new Scanner(file);
-        ArrayList words = new ArrayList<String>();
+        try (Scanner s = new Scanner(file)) {
         while (s.hasNextLine()) {
-            if (s.nextLine() != null || !(s.nextLine().isEmpty()) || !(s.nextLine().isBlank())) {
-            this.insertTrie(s.nextLine());
+            String line = s.nextLine();
+            if (line != null || !(s.nextLine().isEmpty()) || !(s.nextLine().isBlank())) {
+            this.insertTrie(line);
+                System.out.println(line);
+                }
+            }
         }
-    }
     }
     
     
@@ -50,7 +52,9 @@ public class Trie {
         }
         
         //what needs to be added is a filter for checking if the letter is only a blank space
+       
         TrieNode current = this.root;
+        
         for (int i = 0; i < word.length(); i ++) {
             char letter = Character.toLowerCase(word.charAt(i));
             TrieNode nextLetter = current.children.get(letter);
@@ -75,14 +79,46 @@ public class Trie {
             }
             current = nextLetter;
         }
-        return current.terminal; 
+        return current.terminal;    
+    }
+    
+    public void printWords(char prefix) {
+        //haetaan rootista kirjain a -> tulostetaan jotenkin kaikki sanat, jotka alkaa a:lla
+        TrieNode prefixNode = findNodeWithPrefix(prefix); //siirrytään alempaan metodiin eli pyydetään palauttamaan uusi trienode
+        if (prefixNode != null) { 
+            List<String> words = new ArrayList<>(); //tehdään arraylist
+            collect(prefixNode, String.valueOf(prefix), words); //siirrytään taas uuteen metodiin
+            for (String word : words) {
+                System.out.println(word);
+            }
+        }
         
     }
     
-    void printWholeTrie() {
-
-    }
+    //At the moment, the print method works for those words that do have prefixes in the trie.
     
+    private TrieNode findNodeWithPrefix(char prefix){
+        TrieNode current = this.root;
+        if (current != null && current.children.containsKey(prefix)) {
+            current = current.children.get(prefix);
+            return current;
+        }
+        else if (current !=null && !current.children.containsKey(prefix)) {
+            System.out.println("No words with this prefix in Trie.");;
+    }
+        return null;
+}
+    
+   
+    private void collect(TrieNode node, String currentWord, List<String> words) {
+        if (node.isTerminal()) {
+            words.add(currentWord);
+        }
+        
+        for (char ch : node.children.keySet()) {
+            collect(node.children.get(ch), currentWord + ch, words); //tällä rekursiolla saadaan muodostettua sanat!
+        }
+    }
     
     private void assertEquals(int length, int size) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -37,13 +37,18 @@ public class App {
         trie.insertTrie("Inka");
         System.out.println("\n");
         System.out.println(trie.searchTrie("Inka"));
-        System.out.println(trie.root.getCharacters());
-        System.out.println(trie.root.getChild());
+        System.out.println(trie.returnRoot().getCharacters());
+        System.out.println(trie.returnRoot().getChild());
         System.out.println(trie);
         //System.out.println(trie.root.getAllChildren("a"));
         //testVisualization testi = new testVisualization();
         //Stage stage = new Stage();
         //testi.start(stage);
         System.out.println(trie.searchTrie("Inka"));
+        //trie.root.getAllChildren();
+        trie.returnRoot().setChild('x', new TrieNode());
+        trie.returnRoot().setChild('b', new TrieNode());
+        trie.searchTrie("Alastair");
+        trie.printWords('s');
     }
 }
