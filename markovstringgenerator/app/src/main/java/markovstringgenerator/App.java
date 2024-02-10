@@ -49,6 +49,21 @@ public class App {
         trie.returnRoot().setChild('x', new TrieNode());
         trie.returnRoot().setChild('b', new TrieNode());
         trie.searchTrie("Alastair");
-        trie.printWords('s');
+        trie.printWords('o');
+        trie.printWords("al");
+        System.out.println("\n");
+        trie.printWords("oli");
+        trie.insertTrie("oliver");
+        trie.printWords("oli");
+        System.out.print(trie.doesPrefixExist("al"));
+        System.out.print(trie.doesPrefixExist("ba"));
+        trie.insertTrie("oliver");
+        trie.printWords('o');
+        trie.insertTrie("olivia");
+        System.out.println("\n");
+        trie.printWords('o');
+        System.out.println(trie);
+        trie.printWords('w');
+        trie.printWords('i');
     }
 }

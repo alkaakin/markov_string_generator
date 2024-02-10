@@ -16,11 +16,13 @@ public class TrieNode {
     //
     HashMap<Character, TrieNode> children;
     boolean terminal;
+    int frequency;
 
     public TrieNode() {
         
         this.children = new HashMap<Character, TrieNode>();
         this.terminal = false;
+        this.frequency = 0;
     }
     
     public Collection<TrieNode> getChild() {
@@ -58,6 +60,8 @@ public class TrieNode {
         Set<Character> keySet = children.keySet();
         return keySet;
     }
+    
+    
     
     @Override
     public String toString() {
