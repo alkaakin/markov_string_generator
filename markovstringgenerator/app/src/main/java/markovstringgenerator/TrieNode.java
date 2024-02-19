@@ -15,6 +15,7 @@ public class TrieNode {
     //HashMap stores information on the character in question and any other trienodes it references
     //
     HashMap<Character, TrieNode> children;
+    HashMap<String, Integer> frequencies;
     boolean terminal;
     int frequency;
 
@@ -22,7 +23,7 @@ public class TrieNode {
         
         this.children = new HashMap<Character, TrieNode>();
         this.terminal = false;
-        this.frequency = 0;
+        this.frequencies = new HashMap<String, Integer>();
     }
     
     public Collection<TrieNode> getChild() {
@@ -67,8 +68,22 @@ public class TrieNode {
     public String toString() {
         return "TrieNode{" +
                 "children=" + children.keySet() +
+                "frequencies=" + frequencies.keySet() +
                 ", terminal=" + terminal +
                 '}';
     }
+    
+    public String returnFrequencies(String word) {
+        StringBuilder result = new StringBuilder();
+        
+        for (Map.Entry<String, Integer> entry : frequencies.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            result.append("First word: ").append(word).append(" Second word: ").append(key).append(", Times followed by: ").append(value).append("\n"); 
+        }
+        
+        return result.toString();
+    }
+    
     
 }

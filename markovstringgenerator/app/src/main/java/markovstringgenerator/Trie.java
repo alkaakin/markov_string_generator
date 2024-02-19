@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -46,17 +47,28 @@ public class Trie {
         }
     }
     
-    public void insertTrie(String word) {
-        if (this.searchTrie(word)) {
-            TrieNode node = returnTerminalNode(word);
-            node.frequency++;
-            return;
+    public void longerTextFileToTrie(File file) throws FileNotFoundException {
+        try (Scanner s = new Scanner(file)) {
+        ArrayList<String> tuples = new ArrayList<>();
+            while (s.hasNext()) {
+                String word = s.next().toLowerCase();
+                if (word != null || (!word.isEmpty()) || (!word.isBlank())) {
+                    tuples.add(word);
+                }
+                //After this, the tuples arraylist should be complete. Then we do the comparison and insert.
+            }
+            for (int i = 0; i < tuples.size()-1; i++) {
+                //Analyze two words at the same time. Insertation needs a new method as well.
+                insertTuples(tuples.get(i), tuples.get(i+1));
+            }
+            
         }
-               
+    }
+    
+    public void insertTuples(String a, String b) {
         TrieNode current = this.root;
-        
-        for (int i = 0; i < word.length(); i ++) {
-            char letter = Character.toLowerCase(word.charAt(i));
+        for (int i = 0; i < a.length(); i ++) {
+            char letter = Character.toLowerCase(a.charAt(i));
             TrieNode nextLetter = current.children.get(letter);
             if (!current.children.containsKey(letter)) {
                 nextLetter = new TrieNode();
@@ -64,11 +76,46 @@ public class Trie {
             }
             current = nextLetter;
         }
+        
         current.terminal = true;
-        current.frequency++;
+        current.frequencies.put(b, current.frequencies.getOrDefault(b, 0)+1);
+        //Here the sequence for setting values for a ends
+        
+        current = this.root;
+        for (int i = 0; i < b.length(); i ++) {
+            char letter = Character.toLowerCase(b.charAt(i));
+            TrieNode nextLetter = current.children.get(letter);
+            if (!current.children.containsKey(letter)) {
+                nextLetter = new TrieNode();
+                current.children.put(letter, nextLetter);
+            }
+            current = nextLetter;
+        }
+        
+        current.terminal = true;
     }
-    
-    
+   
+    //public void insertTrie(String word) {
+        //if (this.searchTrie(word)) {
+            //TrieNode node = returnTerminalNode(word);
+            //node.frequency++;
+            //return;
+        //}
+               
+        //TrieNode current = this.root;
+        
+        //for (int i = 0; i < word.length(); i ++) {
+            //char letter = Character.toLowerCase(word.charAt(i));
+            //TrieNode nextLetter = current.children.get(letter);
+            //if (!current.children.containsKey(letter)) {
+                //nextLetter = new TrieNode();
+                //current.children.put(letter, nextLetter);
+            //}
+            //current = nextLetter;
+        //}
+        //current.terminal = true;
+        //current.frequency++;
+    //}
     
     public boolean searchTrie(String word) {
         TrieNode current = this.root;
@@ -83,6 +130,11 @@ public class Trie {
         }
         return current.terminal;    
     }
+    
+    public String printFrequencies(String word) {
+        return returnTerminalNode(word).returnFrequencies(word);
+    }
+    
     
     private TrieNode returnTerminalNode(String word) {
         TrieNode current = this.root;
