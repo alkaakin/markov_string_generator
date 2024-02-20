@@ -12,12 +12,11 @@ import java.util.*;
  */
 //For now, the TrieNode will be implemented by using a Java HashMap. This will be replaced later with a separate structure
 public class TrieNode {
-    //HashMap stores information on the character in question and any other trienodes it references
-    //
+    //HashMap children stores information on the character in question and any other trienodes it references
+    //HashMap frequencies is only active for the last node of a word (the last letter). It is used to store information about the following words.
     HashMap<Character, TrieNode> children;
     HashMap<String, Integer> frequencies;
     boolean terminal;
-    int frequency;
 
     public TrieNode() {
         
@@ -62,7 +61,33 @@ public class TrieNode {
         return keySet;
     }
     
-    
+    public String highestValueKey() {
+        
+        HashMap<String, Integer> map = this.frequencies;
+        int max = Integer.MIN_VALUE;
+        String maxKey = null;
+        ArrayList<String> maxKeys = new ArrayList<>();
+        
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            int value = entry.getValue();
+            
+            if (value > max) {
+                maxKeys.clear();
+                maxKeys.add(key);
+                max = value;
+            } else if (value == max) {
+                maxKeys.add(key);
+            }
+            
+        }
+        if (!maxKeys.isEmpty()) {
+            Random random = new Random();
+            int i = random.nextInt(maxKeys.size());
+            return maxKeys.get(i);
+        }
+        return null;
+    }
     
     @Override
     public String toString() {

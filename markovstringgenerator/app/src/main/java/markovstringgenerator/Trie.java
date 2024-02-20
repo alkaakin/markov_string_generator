@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -25,7 +26,7 @@ public class Trie {
     private TrieNode current;
     private FileInputStream stream;
     private BufferedReader reader;
-
+    
     public Trie() {
         this.root = new TrieNode();
     }
@@ -35,19 +36,6 @@ public class Trie {
     }
     
     public void fileToTrie(File file) throws FileNotFoundException {
-        try (Scanner s = new Scanner(file)) {
-        //converting the scanner to read a more complext text file
-        while (s.hasNext()) {
-            String word = s.next().toLowerCase();
-            if (word != null || (!word.isEmpty()) || (!word.isBlank())) {
-            this.insertTrie(word);
-                System.out.println(word);
-                }
-            }
-        }
-    }
-    
-    public void longerTextFileToTrie(File file) throws FileNotFoundException {
         try (Scanner s = new Scanner(file)) {
         ArrayList<String> tuples = new ArrayList<>();
             while (s.hasNext()) {
@@ -94,28 +82,6 @@ public class Trie {
         
         current.terminal = true;
     }
-   
-    //public void insertTrie(String word) {
-        //if (this.searchTrie(word)) {
-            //TrieNode node = returnTerminalNode(word);
-            //node.frequency++;
-            //return;
-        //}
-               
-        //TrieNode current = this.root;
-        
-        //for (int i = 0; i < word.length(); i ++) {
-            //char letter = Character.toLowerCase(word.charAt(i));
-            //TrieNode nextLetter = current.children.get(letter);
-            //if (!current.children.containsKey(letter)) {
-                //nextLetter = new TrieNode();
-                //current.children.put(letter, nextLetter);
-            //}
-            //current = nextLetter;
-        //}
-        //current.terminal = true;
-        //current.frequency++;
-    //}
     
     public boolean searchTrie(String word) {
         TrieNode current = this.root;
@@ -132,6 +98,9 @@ public class Trie {
     }
     
     public String printFrequencies(String word) {
+        if (!searchTrie(word)) {
+            return null;
+        }
         return returnTerminalNode(word).returnFrequencies(word);
     }
     
@@ -149,6 +118,21 @@ public class Trie {
         }
         return current; 
     }
+    
+    public String markovAutoComplete(String word) {
+        if (!searchTrie(word)) {
+            return null;
+        }
+        String autocomplete = word + " ";
+        TrieNode itrNode = returnTerminalNode(word);
+        while (!itrNode.frequencies.isEmpty() && autocomplete.length() <= 300) {
+            String nextString = itrNode.highestValueKey();
+            autocomplete += nextString + " ";
+            itrNode = returnTerminalNode(nextString);
+        }
+        return autocomplete;  
+    }
+    
     
     public void printWords(String prefix){
         
@@ -207,7 +191,7 @@ public class Trie {
         }
         
         for (char ch : node.children.keySet()) {
-            collect(node.children.get(ch), currentWord + ch, words); //tällä rekursiolla saadaan muodostettua sanat!
+            collect(node.children.get(ch), currentWord + ch, words); 
         }
     }
     
@@ -215,11 +199,5 @@ public class Trie {
         TrieNode prefixNode = findNodeWithPrefix(prefix);
         return prefixNode != null;
     }
-   
-    
-    private void assertEquals(int length, int size) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
     
 }

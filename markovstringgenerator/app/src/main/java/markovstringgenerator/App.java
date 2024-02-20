@@ -18,22 +18,14 @@ public class App {
     public static void main(String[] args) throws FileNotFoundException {
         
         Trie trie = new Trie();
-        System.out.print(trie.searchTrie("ADD"));
-        trie.insertTrie("ADD");
-        System.out.print(trie.searchTrie("ADD"));
         File nimilista = new File("/home/alkaakin/markov_string_generator/markovstringgenerator/nimilista.txt");
         FileInputStream stream = new FileInputStream(nimilista);
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        trie.longerTextFileToTrie(nimilista);
+        trie.fileToTrie(nimilista);
         //trie.fileToTrie(nimilista);
         trie.printWords('k');
-        System.out.print(trie.searchTrie("know"));
-        System.out.print(trie.searchTrie("it"));
-        System.out.print(trie.searchTrie("why"));
-        System.out.println(trie.printFrequencies("why"));
-        System.out.println(trie.printFrequencies("it"));
-        System.out.println(trie.printFrequencies("know"));
-        System.out.println(trie.printFrequencies("hey"));
+
+        System.out.println(trie.markovAutoComplete("Vain"));
         
     }
 }
